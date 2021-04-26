@@ -1,16 +1,4 @@
 <?php
-
-require 'plugin-update-checker/plugin-update-checker.php';
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-	'https://github.com/OmarTaherSaad/dr-wolf-payment-gateway',
-	__FILE__,
-	'unique-plugin-or-theme-slug'
-);
-
-//Set the branch that contains the stable release.
-$myUpdateChecker->setBranch('main');
-
-
 if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
@@ -163,6 +151,7 @@ function drwolf_init_gateway_class()
 			$args = array(
 				'wp_id' => $order_id,
 				'return_url' => $this->get_return_url($order),
+				'cancel_url' => $order->get_checkout_payment_url(),
 				'key' => $isTest ? $this->get_option('test_key') : $this->get_option('live_key'),
 				'currency' => $order->get_currency(),
 				'amount_cents' => $order->get_total() * 100,
