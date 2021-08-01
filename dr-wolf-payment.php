@@ -18,7 +18,7 @@ add_action('init', 'modify_jquery_version');
  * Description: Accept payments through Dr Wolf payment gateway.
  * Author: Omar Taher Saad
  * Author URI: https://omartahersaad.com
- * Version: 1.2
+ * Version: 1.3
  */
 /*
  * This action hook registers our PHP class as a WooCommerce payment gateway
@@ -142,98 +142,6 @@ function drwolf_init_gateway_class()
 					'default' => get_site_url() . '/wc-api/drwolf/'
 				)
 			);
-		}
-		
-		public function payment_fields()
-		{
-			?>
-<style>
-	#modal *, div {
-  box-sizing: border-box;
-  font-family: sans-serif;
-  text-align: center;
-}
-
-#modal .modal-container:before {
-  content: "";
-  background-color: rgba(0, 0, 0, 0.6);
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
-#modal .modal-container:closed {
-  display: none;
-}
-
-#modal .modal {
-	position: fixed;
-    left: 0px;
-    right: 0px;
-    margin: auto;
-    display: block;
-    background: red;
-    color: white;
-    padding: 30vh 40px;
-    width: 600px;
-    height: 90vh;
-    max-width: 100%;
-    z-index: 999;
-}
-
-#modal button {
-  border: none;
-  background-color: transparent;
-  font-weight: bold;
-  color: #2971d4;
-  font-size: 14px;
-  padding: 15px;
-  cursor: pointer;
-  float: right;
-  outline: none;
-}
-#modal button:hover {
-  background-color: #e5e5e5;
-}
-</style>
-<div id="modal" class="modal-container">
-  <div class="modal">
-    <h2>IMPORTANT!!</h2>
-    <p>Contact your bank before purchase and inform them that your going to pay internationally in the Egyptian pound</p>
-    <button id="gotit">GOT IT!</button>
-  </div>
-</div>
-			<h4>
-				You will pay the same amount but in Egyptian Pound, Please contact your bank to allow transactions in EGP.
-			</h4>
-			<script defer>
-				$(function(){
-					$("#modal").hide();
-					$( 'body' ).on( 'updated_checkout', function() {
-						usingGateway();
-
-						$('input[name="payment_method"]').change(function(){
-							usingGateway();
-
-						});
-					});
-					$("button").on("click", function(){
-						$("#modal").fadeOut();
-					});
-
-					$(".modal-container").on("click", function(){
-						$("#modal").fadeOut();
-					});
-				});
-				function usingGateway(){
-					if($('form[name="checkout"] input[name="payment_method"]:checked').val() == 'drwolf'){
-						$("#modal").show("closed");
-					}
-				}
-			</script>
-			<?php
 		}
 
 		/*
