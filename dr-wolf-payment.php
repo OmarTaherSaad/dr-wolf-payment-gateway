@@ -23,7 +23,7 @@ add_action('init', 'modify_jquery_version');
  * Description: Accept payments through Dr Wolf payment gateway.
  * Author: Omar Taher Saad
  * Author URI: https://omartahersaad.com
- * Version: 1.3
+ * Version: 1.4
  */
 /*
  * This action hook registers our PHP class as a WooCommerce payment gateway
