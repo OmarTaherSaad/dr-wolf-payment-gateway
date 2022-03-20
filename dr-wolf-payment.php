@@ -3,13 +3,18 @@ if (!defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
-function modify_jquery_version() {
-    if (!is_admin()) {
-        wp_deregister_script('jquery');
-        wp_register_script('jquery',
-'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', false, '2.0.s');
-        wp_enqueue_script('jquery');
-    }
+function modify_jquery_version()
+{
+	if (!is_admin()) {
+		wp_deregister_script('jquery');
+		wp_register_script(
+			'jquery',
+			'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js',
+			false,
+			'2.0.s'
+		);
+		wp_enqueue_script('jquery');
+	}
 }
 add_action('init', 'modify_jquery_version');
 
@@ -212,6 +217,22 @@ function drwolf_init_gateway_class()
 
 				// Empty cart
 				$woocommerce->cart->empty_cart();
+
+				//Send Email for disputes
+				$user_email = $order->get_billing_email();
+				$headers = [];
+				$headers[] = 'From: ' . get_bloginfo('name') . ' <' . get_bloginfo('admin_email') . '>';
+				$headers[] = 'Cc: Payment Gateway <info@drwolfstore.com>';
+				$message = "
+			Thanks for your purchase from our website!
+			If you have any problem with your order, We can help you out [Reship or full refund]
+			Please contact us if you need any help, we can solve any issues you might have.
+			Please note that your order will appear in your bank statement with a different name but same amount exactly, so don't worry, this is due to the sensitivity of our products :)
+			For more help email us on:
+			info@drwolfstore.com
+			Or call us:
+			+1 443 891 6692";
+				wp_mail($user_email, "Your Order is Paid! We Can Help You", $message, $headers);
 			} else {
 				wc_add_notice('Please try again.', 'error');
 				return;
